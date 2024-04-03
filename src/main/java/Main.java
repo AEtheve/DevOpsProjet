@@ -3,7 +3,10 @@ public class Main {
     public static void main(String[] args) {
         try {
             DataFrame df = new DataFrame("src/main/ressources/example1.csv");
-            df.display();
+            df.displayFirst(1);
+            System.out.println();
+            df.displayLast(1);
+            // df.display();
         } catch (Exception e) {
             e.printStackTrace();
         }

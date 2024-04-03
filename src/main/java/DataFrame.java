@@ -32,6 +32,36 @@ public class DataFrame {
         }
         br.close();
     }
+
+    public void displayFirst(int numRows) {
+        // Affiche numRows les premières lignes du DataFrame 
+        for (String column : columns) {
+            System.out.print(column + "\t");
+        }
+        System.out.println();
+        for (int i = 0; i < numRows && i < data.size(); i++) {
+            Object[] row = data.get(i);
+            for (Object cell : row) {
+                System.out.print(cell + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    public void displayLast(int numRows) {
+        // Affiche numRows les dernières lignes du DataFrame
+        for (String column : columns) {
+            System.out.print(column + "\t");
+        }
+        System.out.println();
+        for (int i = Math.max(0, data.size() - numRows); i < data.size(); i++) {
+            Object[] row = data.get(i);
+            for (Object cell : row) {
+                System.out.print(cell + "\t");
+            }
+            System.out.println();
+        }
+    }
     
 
     public void display() {
