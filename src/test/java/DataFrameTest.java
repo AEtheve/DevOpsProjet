@@ -61,4 +61,12 @@ public class DataFrameTest {
         double maxScore = df.calculateMaximum("Age"); // Calcule le score maximum
         assertEquals(22.0, maxScore, 0.001); 
     }
+
+    @Test
+    public void testDFcalculateMeanNonexistentColumn() throws IOException {
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        double meanNonexistent = df.calculateMean("NonexistentColumn");
+        assertTrue(Double.isNaN(meanNonexistent)); // Vérifie que la moyenne est NaN pour une colonne inexistante
+    }
+
 }
