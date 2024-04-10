@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataFrame {
     private List<Object[]> data;
@@ -119,6 +120,20 @@ public class DataFrame {
         }
         // Crée et retourne un nouveau DataFrame contenant les colonnes sélectionnées
         return new DataFrame(selectedData, labels);
+    }
+
+    public double calculateMean(String columnName) {
+        int columnIndex = Arrays.asList(columns).indexOf(columnName);
+        double mean = 0; // Déclaration de mean en tant que double
+        if (columnIndex == -1) {
+            System.out.println("La colonne '" + columnName + "' n'existe pas.");
+            return Double.NaN;
+        }
+        // Récupère les valeurs de la colonne
+        List<Double> values = data.stream().map(row -> Double.parseDouble(row[columnIndex].toString())).collect(Collectors.toList());
+        // Calcule la moyenne
+        mean = values.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+        return mean;
     }
 
     
