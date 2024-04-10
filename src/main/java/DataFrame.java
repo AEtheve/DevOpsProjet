@@ -65,10 +65,37 @@ public class DataFrame {
     
 
     public void display() {
+        // Affiche toutes les données du DataFrame
         System.out.println(Arrays.toString(columns));
         for (Object[] row : data) {
             System.out.println(Arrays.toString(row));
         }
 
     }
+
+    public DataFrame selectRows(int[] indices) {
+        // Sélectionne les lignes spécifiées par les indices
+        // Vérifie que les indices fournis sont valides
+        if (indices == null || indices.length == 0) {
+            System.out.println("Aucun indice spécifié pour la sélection des lignes.");
+            return null;
+        }
+        // Initialise une liste pour stocker les données sélectionnées
+        List<Object[]> selectedData = new ArrayList<>();
+        // Parcourt les indices spécifiés
+        for (int index : indices) {
+            // Vérifie que l'index est valide
+            if (index >= 0 && index < data.size()) {
+                // Ajoute la ligne correspondante aux données sélectionnées
+                selectedData.add(data.get(index));
+            } else {
+                System.out.println("L'indice " + index + " est invalide.");
+            }
+        }
+        // Convertit la liste en tableau pour créer un nouveau DataFrame
+        Object[][] selectedDataArray = selectedData.toArray(new Object[selectedData.size()][]);
+        // Retourne un nouveau DataFrame contenant les lignes sélectionnées
+        return new DataFrame(selectedDataArray, columns);
+    }
+    
 }
