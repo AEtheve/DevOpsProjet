@@ -6,26 +6,41 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Une classe représentant un DataFrame pour la manipulation de données tabulaires.
+ */
 public class DataFrame {
     private List<Object[]> data;
     private String[] columns;
 
+    /**
+     * Constructeur prenant des données et des colonnes en tant que paramètres.
+     *
+     * @param data    Les données du DataFrame.
+     * @param columns Les noms des colonnes.
+     */
     public DataFrame(Object[][] data, String[] columns) {
         this.data = new ArrayList<>(Arrays.asList(data));
         this.columns = columns;
     }
 
+    /**
+     * Constructeur prenant un chemin de fichier CSV comme paramètre pour charger les données.
+     *
+     * @param csvFilePath Le chemin du fichier CSV.
+     * @throws IOException En cas d'erreur lors de la lecture du fichier.
+     */
     public DataFrame(String csvFilePath) throws IOException {
         this.data = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(csvFilePath));
         String line;
         boolean firstLine = true;
         while ((line = br.readLine()) != null) {
-            if (firstLine) { 
+            if (firstLine) {
                 // La première ligne correspond aux noms des colonnes
                 this.columns = line.split(",");
                 firstLine = false;
-            } else { 
+            } else {
                 // Les autres lignes correspondent aux données
                 String[] rowData = line.split(",");
                 data.add(rowData);
@@ -34,8 +49,13 @@ public class DataFrame {
         br.close();
     }
 
+    /**
+     * Affiche les premières lignes du DataFrame.
+     *
+     * @param numRows Le nombre de lignes à afficher.
+     */
     public void displayFirst(int numRows) {
-        // Affiche numRows premières lignes du DataFrame 
+        // Affiche numRows premières lignes du DataFrame
         for (String column : columns) {
             System.out.print(column + "\t");
         }
@@ -49,6 +69,11 @@ public class DataFrame {
         }
     }
 
+    /**
+     * Affiche les dernières lignes du DataFrame.
+     *
+     * @param numRows Le nombre de lignes à afficher.
+     */
     public void displayLast(int numRows) {
         // Affiche numRows dernières lignes du DataFrame
         for (String column : columns) {
@@ -63,8 +88,10 @@ public class DataFrame {
             System.out.println();
         }
     }
-    
 
+    /**
+     * Affiche toutes les données du DataFrame.
+     */
     public void display() {
         // Affiche toutes les données du DataFrame
         System.out.println(Arrays.toString(columns));
@@ -74,6 +101,12 @@ public class DataFrame {
 
     }
 
+    /**
+     * Sélectionne les lignes spécifiées par les indices.
+     *
+     * @param indices Les indices des lignes à sélectionner.
+     * @return Un nouveau DataFrame contenant les lignes sélectionnées.
+     */
     public DataFrame selectRows(int[] indices) {
         // Sélectionne les lignes spécifiées par les indices
         // Vérifie que les indices fournis sont valides
@@ -99,6 +132,12 @@ public class DataFrame {
         return new DataFrame(selectedDataArray, columns);
     }
 
+    /**
+     * Sélectionne les colonnes spécifiées par les labels.
+     *
+     * @param labels Les noms des colonnes à sélectionner.
+     * @return Un nouveau DataFrame contenant les colonnes sélectionnées.
+     */
     public DataFrame selectColumns(String[] labels) {
         // Sélectionne les colonnes spécifiées par les labels
         int[] selectedIndices = new int[labels.length];
@@ -122,6 +161,12 @@ public class DataFrame {
         return new DataFrame(selectedData, labels);
     }
 
+    /**
+     * Calcule la moyenne des valeurs dans la colonne spécifiée.
+     *
+     * @param columnName Le nom de la colonne pour laquelle calculer la moyenne.
+     * @return La moyenne des valeurs de la colonne.
+     */
     public double calculateMean(String columnName) {
         int columnIndex = Arrays.asList(columns).indexOf(columnName);
         double mean = 0; // Déclaration de mean en tant que double
@@ -151,7 +196,13 @@ public class DataFrame {
         // Trouve la valeur minimale
         return values.stream().mapToDouble(Double::doubleValue).min().orElse(Double.NaN);
     }
-
+    
+    /**
+     * Calcule la valeur maximale dans la colonne spécifiée.
+     *
+     * @param columnName Le nom de la colonne pour laquelle calculer la valeur maximale.
+     * @return La valeur maximale de la colonne.
+     */
     public double calculateMaximum(String columnName) {
         // Obtient l'index de la colonne
         int columnIndex = Arrays.asList(columns).indexOf(columnName);
