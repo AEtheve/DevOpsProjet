@@ -13,6 +13,7 @@ public class DataFrame {
     private List<Object[]> data;
     private String[] columns;
 
+    
     /**
      * Constructeur prenant des données et des colonnes en tant que paramètres.
      *
@@ -217,13 +218,6 @@ public class DataFrame {
                                   .collect(Collectors.toList());
         // Trouve la valeur maximale
         return values.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN);
-    }
-    public String getDataAsString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Object[] row : data) {
-            stringBuilder.append(Arrays.toString(row)).append("\n");
-        }
-        return stringBuilder.toString();
     }
 
     
