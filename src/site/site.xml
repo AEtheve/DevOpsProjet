@@ -1,0 +1,27 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/DECORATION/1.7.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
+
+    <!-- Utilisation du template de site fluido -->
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.6</version>
+    </skin>
+
+    <!-- Affichage de la date et de la version à droite dans le bandeau du haut -->
+    <publishDate position="right"/>
+    <version position="right"/>
+
+    <body>
+         <!--<menu ref="parent" inherit="top"/>-->       <!-- Add link to parent project to the menu (for multimodule projects) -->
+        <!--<menu ref="reports" inherit="top"/>-->      <!-- Add set of links to standard Maven reports like tests and checkstyle -->
+        <!--<menu ref="modules"/>-->                    <!-- Add set of links to modules in multimodule project -->
+        <menu name="Pages">                             <!-- Add links to pages to menu -->
+            <item name="Auteurs" href="./index.html" />
+            <item name="Readme" href="./readme.html" />
+            <item name="JavaDoc" href="./apidocs/index.html" />
+
+        </menu>
+    </body>
+    
+</project>
