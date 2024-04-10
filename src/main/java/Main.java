@@ -12,6 +12,12 @@ public class Main {
             double meanAge = df.calculateMean("Age");
             System.out.println("Moyenne de l'âge : " + meanAge);
 
+            // Calcul du minimum et du maximum de l'âge
+            double minAge = df.calculateMinimum("Age");
+            double maxAge = df.calculateMaximum("Age");
+            System.out.println("Minimum de l'âge : " + minAge);
+            System.out.println("Maximum de l'âge : " + maxAge);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -136,5 +136,37 @@ public class DataFrame {
         return mean;
     }
 
+    public double calculateMinimum(String columnName) {
+        // Obtient l'index de la colonne
+        int columnIndex = Arrays.asList(columns).indexOf(columnName);
+        // Vérifie si la colonne existe
+        if (columnIndex == -1) {
+            System.out.println("La colonne '" + columnName + "' n'existe pas.");
+            return Double.NaN;
+        }
+        // Récupère les valeurs de la colonne
+        List<Double> values = data.stream()
+                                  .map(row -> Double.parseDouble(row[columnIndex].toString()))
+                                  .collect(Collectors.toList());
+        // Trouve la valeur minimale
+        return values.stream().mapToDouble(Double::doubleValue).min().orElse(Double.NaN);
+    }
+
+    public double calculateMaximum(String columnName) {
+        // Obtient l'index de la colonne
+        int columnIndex = Arrays.asList(columns).indexOf(columnName);
+        // Vérifie si la colonne existe
+        if (columnIndex == -1) {
+            System.out.println("La colonne '" + columnName + "' n'existe pas.");
+            return Double.NaN;
+        }
+        // Récupère les valeurs de la colonne
+        List<Double> values = data.stream()
+                                  .map(row -> Double.parseDouble(row[columnIndex].toString()))
+                                  .collect(Collectors.toList());
+        // Trouve la valeur maximale
+        return values.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN);
+    }
+
     
 }
