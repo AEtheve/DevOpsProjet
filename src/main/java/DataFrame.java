@@ -218,6 +218,13 @@ public class DataFrame {
         // Trouve la valeur maximale
         return values.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN);
     }
+    public String getDataAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Object[] row : data) {
+            stringBuilder.append(Arrays.toString(row)).append("\n");
+        }
+        return stringBuilder.toString();
+    }
 
     
 }
