@@ -21,11 +21,11 @@ public class DataFrame {
         boolean firstLine = true;
         while ((line = br.readLine()) != null) {
             if (firstLine) { 
-                // La première ligne est les noms des colonnes
+                // La première ligne correspond aux noms des colonnes
                 this.columns = line.split(",");
                 firstLine = false;
             } else { 
-                // Les autres lignes sont les données
+                // Les autres lignes correspondent aux données
                 String[] rowData = line.split(",");
                 data.add(rowData);
             }
@@ -34,7 +34,7 @@ public class DataFrame {
     }
 
     public void displayFirst(int numRows) {
-        // Affiche numRows les premières lignes du DataFrame 
+        // Affiche numRows premières lignes du DataFrame 
         for (String column : columns) {
             System.out.print(column + "\t");
         }
@@ -49,7 +49,7 @@ public class DataFrame {
     }
 
     public void displayLast(int numRows) {
-        // Affiche numRows les dernières lignes du DataFrame
+        // Affiche numRows dernières lignes du DataFrame
         for (String column : columns) {
             System.out.print(column + "\t");
         }
@@ -97,5 +97,29 @@ public class DataFrame {
         // Retourne un nouveau DataFrame contenant les lignes sélectionnées
         return new DataFrame(selectedDataArray, columns);
     }
+
+    public DataFrame selectColumns(String[] labels) {
+        // Sélectionne les colonnes spécifiées par les labels
+        int[] selectedIndices = new int[labels.length];
+        // Parcourt les labels spécifiés
+        for (int i = 0; i < labels.length; i++) {
+            for (int j = 0; j < columns.length; j++) {
+                if (columns[j].equals(labels[i])) {
+                    selectedIndices[i] = j;
+                    break;
+                }
+            }
+        }
+        // Initialise un tableau pour stocker les données sélectionnées
+        Object[][] selectedData = new Object[data.size()][labels.length];
+        for (int i = 0; i < data.size(); i++) {
+            for (int j = 0; j < labels.length; j++) {
+                selectedData[i][j] = data.get(i)[selectedIndices[j]];
+            }
+        }
+        // Crée et retourne un nouveau DataFrame contenant les colonnes sélectionnées
+        return new DataFrame(selectedData, labels);
+    }
+
     
 }

@@ -8,6 +8,7 @@ public class Main {
             // df.displayLast(1);
             // df.display();
             df.selectRows(new int[]{0, 2}).display();
+            df.selectColumns(new String[]{"Nom"}).display();
         } catch (Exception e) {
             e.printStackTrace();
         }
