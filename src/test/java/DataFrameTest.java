@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 
 public class DataFrameTest {
     
-    
 
     @Test
     public void testDFnotnull() throws IOException {
@@ -97,6 +96,23 @@ public class DataFrameTest {
         assertTrue(response.matches("Nom\\s*\\t\\s*Age\\s*\\t\\s*Note\\s*\\n\\s*Dave\\s*\\t\\s*22\\s*\\t\\s*80\\s*\\n"));
     }
 
+    @Test
+    public void testFilter() throws IOException {
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        DataFrame filteredDataFrame = df.filter("Age", 25);
 
+        // Vérifie que le DataFrame filtré n'est pas null
+        assertNotNull(filteredDataFrame);
 
+        // Vérifie que le DataFrame filtré contient le nombre attendu de lignes
+        // Remplacez 0 par le nombre attendu de lignes dans votre DataFrame filtré
+        // En fonction des données de votre fichier CSV
+        assertEquals(0, filteredDataFrame.getData().size());
+
+        // Ajoutez d'autres assertions au besoin pour vérifier le contenu du DataFrame filtré
+    }
 }
+
+
+
+

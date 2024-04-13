@@ -13,6 +13,15 @@ public class DataFrame {
     private List<Object[]> data;
     private String[] columns;
 
+    /**
+     * Obtient les données du DataFrame.
+     *
+     * @return Les données du DataFrame.
+     */
+    public List<Object[]> getData() {
+        return data;
+    }
+
     
     /**
      * Constructeur prenant des données et des colonnes en tant que paramètres.
@@ -219,6 +228,54 @@ public class DataFrame {
         // Trouve la valeur maximale
         return values.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN);
     }
+
+    /**
+     * Filtrer les lignes du DataFrame en fonction d'une condition simple.
+     *
+     * @param columnName Le nom de la colonne à filtrer.
+     * @param seuil  Le seuil à comparer.
+     * @return Un nouveau DataFrame contenant les lignes filtrées.
+     */
+    public DataFrame filter(String columnName, double seuil) {
+        // Obtient l'index de la colonne
+        int columnIndex = Arrays.asList(columns).indexOf(columnName);
+        // Vérifie si la colonne existe
+        if (columnIndex == -1) {
+            System.out.println("La colonne '" + columnName + "' n'existe pas.");
+            return null;
+        }
+        
+        // Initialise une liste pour stocker les données filtrées
+        List<Object[]> filteredData = new ArrayList<>();
+        // Parcourt les lignes du DataFrame
+        for (Object[] row : data) {
+            // Récupère la valeur de la colonne
+            Object value = row[columnIndex];
+            // Vérifie si la valeur est supérieure au seuil
+            if (value instanceof String) {
+                try {
+                    // Tente de convertir la valeur en Double
+                    Double numericValue = Double.parseDouble((String) value);
+                    // Vérifie si la valeur convertie est supérieure au seuil
+                    if (numericValue > seuil) {
+                        // Ajoute la ligne au DataFrame filtré
+                        filteredData.add(row);
+                    }
+                } catch (NumberFormatException e) {
+                    // Gère les valeurs qui ne peuvent pas être converties en Double
+                    System.out.println("La valeur '" + value + "' dans la colonne '" + columnName + "' n'est pas un nombre valide.");
+                }
+            } else if (value instanceof Double && (Double) value > seuil) {
+                // Si la valeur est déjà de type Double, vérifie simplement si elle est supérieure au seuil
+                filteredData.add(row);
+            }
+        }
+        // Convertit la liste en tableau pour créer un nouveau DataFrame
+        Object[][] filteredDataArray = filteredData.toArray(new Object[filteredData.size()][]);
+        // Retourne un nouveau DataFrame contenant les lignes filtrées
+        return new DataFrame(filteredDataArray, columns);
+    }
+    
 
     
 }
