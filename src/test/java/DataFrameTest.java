@@ -111,6 +111,27 @@ public class DataFrameTest {
 
         // Ajoutez d'autres assertions au besoin pour vérifier le contenu du DataFrame filtré
     }
+
+    @Test
+    public void testGetData() throws Exception {
+        // Création d'un DataFrame avec des données fictives
+        Object[][] testData = {
+                {"Alice", 20, 85},
+                {"Bob", 22, 90},
+                {"Charlie", 25, 88}
+        };
+        String[] columns = {"Name", "Age", "Score"};
+        DataFrame df = new DataFrame(testData, columns);
+
+        // Obtention des données à partir du DataFrame
+        Object[][] data = df.getData();
+
+        // Vérification que les données obtenues sont identiques aux données d'origine
+        assertEquals(testData.length, data.length);
+        for (int i = 0; i < testData.length; i++) {
+            assertArrayEquals(testData[i], data[i]);
+        }
+    }
 }
 
 
