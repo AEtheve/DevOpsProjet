@@ -4,28 +4,28 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
-
-
+// Test unitaire pour la classe DataFrame
 public class DataFrameTest {
     
 
     @Test
-    public void testDFnotnull() throws IOException {
+    public void testDFnotnull() throws IOException { // Teste la création d'un DataFrame
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         assert(df != null);
     }
 
     @Test
-    public void testDFdisplay() throws IOException {
+    public void testDFdisplay() throws IOException { // Teste l'affichage
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         df.display();
     }
 
    @Test
-    public void testDFdisplayFirst() throws IOException {
+    public void testDFdisplayFirst() throws IOException { // Teste l'affichage des premières lignes
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -41,49 +41,49 @@ public class DataFrameTest {
     }
 
     @Test
-    public void testDFcalculateMean() throws IOException {
+    public void testDFcalculateMean() throws IOException { // Teste la moyenne
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
-        double meanAge = df.calculateMean("Age"); // Calcule la moyenne d'âge
+        double meanAge = df.calculateMean("Age"); 
         assertEquals(20.5, meanAge, 0.001); 
     }
 
     @Test
-    public void testDFcalculateMinimum() throws IOException {
+    public void testDFcalculateMinimum() throws IOException { // Teste le minimum
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
-        double minScore = df.calculateMinimum("Age"); // Calcule l'age minimum
+        double minScore = df.calculateMinimum("Age"); 
         assertEquals(19.0, minScore, 0.001); 
     }
 
     @Test
-    public void testDFcalculateMaximum() throws IOException {
+    public void testDFcalculateMaximum() throws IOException { // Teste le maximum
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
-        double maxScore = df.calculateMaximum("Age"); // Calcule l'age maximum
+        double maxScore = df.calculateMaximum("Age"); 
         assertEquals(22.0, maxScore, 0.001); 
     }
 
     @Test
-    public void testDFcalculateMeanNonexistentColumn() throws IOException {
+    public void testDFcalculateMeanNonexistentColumn() throws IOException { // Teste la moyenne pour une colonne inexistante
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         double meanNonexistent = df.calculateMean("NonexistentColumn");
-        assertTrue(Double.isNaN(meanNonexistent)); // Vérifie que la moyenne est NaN pour une colonne inexistante
+        assertTrue(Double.isNaN(meanNonexistent)); 
     }
 
     @Test
-    public void testDFcalculateMinimumNonexistentColumn() throws IOException {
+    public void testDFcalculateMinimumNonexistentColumn() throws IOException { // Teste le minimum pour une colonne inexistante
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         double minNonexistent = df.calculateMinimum("NonexistentColumn");
-        assertTrue(Double.isNaN(minNonexistent)); // Vérifie que le minimum est NaN pour une colonne inexistante
+        assertTrue(Double.isNaN(minNonexistent));
     }
 
     @Test
-    public void testDFcalculateMaximumNonexistentColumn() throws IOException {
+    public void testDFcalculateMaximumNonexistentColumn() throws IOException { // Teste le maximum pour une colonne inexistante
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         double maxNonexistent = df.calculateMaximum("NonexistentColumn");
-        assertTrue(Double.isNaN(maxNonexistent)); // Vérifie que le maximum est NaN pour une colonne inexistante
+        assertTrue(Double.isNaN(maxNonexistent)); 
     }
 
     @Test
-    public void testDFdisplayLast() throws IOException {
+    public void testDFdisplayLast() throws IOException { // Teste l'affichage des dernières lignes
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
@@ -97,41 +97,49 @@ public class DataFrameTest {
     }
 
     @Test
-    public void testFilter() throws IOException {
+    public void testFilter() throws IOException { // Teste le filtrage
         DataFrame df = new DataFrame("src/main/ressources/example1.csv");
         DataFrame filteredDataFrame = df.filter("Age", 25);
-
-        // Vérifie que le DataFrame filtré n'est pas null
         assertNotNull(filteredDataFrame);
-
-        // Vérifie que le DataFrame filtré contient le nombre attendu de lignes
-        // Remplacez 0 par le nombre attendu de lignes dans votre DataFrame filtré
-        // En fonction des données de votre fichier CSV
         assertEquals(0, filteredDataFrame.getData().size());
-
-        // Ajoutez d'autres assertions au besoin pour vérifier le contenu du DataFrame filtré
     }
 
-    // @Test
-    // public void testGetData() throws Exception {
-    //     // Création d'un DataFrame avec des données fictives
-    //     Object[][] testData = {
-    //             {"Alice", 20, 85},
-    //             {"Bob", 22, 90},
-    //             {"Charlie", 25, 88}
-    //     };
-    //     String[] columns = {"Name", "Age", "Score"};
-    //     DataFrame df = new DataFrame(testData, columns);
+    @Test
+    public void testSelectColumns() { // Teste la sélection de colonnes
+        try {
+            DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+            DataFrame selectedColumns = df.selectColumns(new String[]{"Nom", "Age"});
+            assertNotNull(selectedColumns);
+            assertEquals(2, selectedColumns.getData().get(0).length);
+        } catch (IOException e) {
+            fail("IOException occurred: " + e.getMessage());
+        }
+    }
 
-    //     // Obtention des données à partir du DataFrame
-    //     Object[][] data = df.getData();
+    @Test
+    public void testSelectRows() { // Teste la sélection de lignes
+        try {
+            DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+            DataFrame selectedRows = df.selectRows(new int[]{0, 2}); // Sélectionne les lignes 0 et 2
+            assertNotNull(selectedRows);
+            assertEquals(2, selectedRows.getData().size());
+        } catch (IOException e) {
+            fail("IOException occurred: " + e.getMessage());
+        }
+    }
 
-    //     // Vérification que les données obtenues sont identiques aux données d'origine
-    //     assertEquals(testData.length, data.length);
-    //     for (int i = 0; i < testData.length; i++) {
-    //         assertArrayEquals(testData[i], data[i]);
-    //     }
-    // }
+    @Test
+    public void testGetData() { // Teste la récupération des données
+        try {
+            DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+            List<Object[]> data = df.getData();
+            assertNotNull(data);
+            assertEquals(4, data.size());
+        } catch (IOException e) {
+            fail("IOException occurred: " + e.getMessage());
+        }
+    }
+
 }
 
 
