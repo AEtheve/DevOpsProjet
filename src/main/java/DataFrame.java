@@ -3,8 +3,10 @@
     import java.io.IOException;
     import java.util.ArrayList;
     import java.util.Arrays;
-    import java.util.List;
-    import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
     /**
      * Une classe représentant un DataFrame pour la manipulation de données tabulaires.
@@ -229,6 +231,29 @@
         }
 
         /**
+         * Calcule la somme des valeurs dans la colonne spécifiée.
+         *
+         * @param columnName Le nom de la colonne pour laquelle calculer la somme.
+         * @return La somme des valeurs de la colonne.
+         */
+        public double calculateSum(String columnName) {
+            // Obtient l'index de la colonne
+            int columnIndex = Arrays.asList(columns).indexOf(columnName);
+            // Vérifie si la colonne existe
+            if (columnIndex == -1) {
+                System.out.println("La colonne '" + columnName + "' n'existe pas.");
+                return Double.NaN;
+            }
+            // Récupère les valeurs de la colonne
+            List<Double> values = data.stream()
+                                    .map(row -> Double.parseDouble(row[columnIndex].toString()))
+                                    .collect(Collectors.toList());
+            // Calcule la somme
+            return values.stream().mapToDouble(Double::doubleValue).sum();
+        }
+
+
+        /**
          * Filtrer les lignes du DataFrame en fonction d'une condition simple.
          *
          * @param columnName Le nom de la colonne à filtrer.
@@ -271,6 +296,66 @@
             // Retourne un nouveau DataFrame contenant les lignes filtrées
             return new DataFrame(filteredDataArray, columns);
         }
+
+
+        /**
+     * Regroupe les données du DataFrame selon les valeurs d'une colonne spécifiée.
+     *
+     * @param columnName Le nom de la colonne selon laquelle effectuer le regroupement.
+     * @return Un Map où les clés sont les valeurs uniques de la colonne et les valeurs sont les DataFrame correspondants.
+     */
+    public Map<Object, DataFrame> groupBy(String columnName) {
+        int columnIndex = Arrays.asList(columns).indexOf(columnName);
+        if (columnIndex == -1) {
+            System.out.println("La colonne '" + columnName + "' n'existe pas.");
+            return null;
+        }
+
+        Map<Object, DataFrame> groupedDataFrames = new HashMap<>();
+        for (Object[] row : data) {
+            Object key = row[columnIndex];
+            DataFrame group = groupedDataFrames.getOrDefault(key, new DataFrame(new Object[0][0], columns));
+            group.data.add(row);
+            groupedDataFrames.put(key, group);
+        }
+
+        return groupedDataFrames;
+    }
+
+    /**
+     * Applique une opération d'agrégation à chaque groupe de données.
+     *
+     * @param operation   L'opération à appliquer (par exemple : moyenne, somme, minimum, maximum).
+     * @param columnName  Le nom de la colonne sur laquelle appliquer l'opération.
+     * @param groupByColumn Le nom de la colonne à utiliser pour le regroupement (si nécessaire).
+     * @return Un Map où les clés sont les valeurs uniques de la colonne de regroupement et les valeurs sont les résultats de l'opération.
+     */
+    public Map<Object, Double> aggregate(String operation, String columnName, String groupByColumn) {
+        if (!operation.equals("mean") && !operation.equals("sum") && !operation.equals("min") && !operation.equals("max")) {
+            System.out.println("Opération non prise en charge : " + operation);
+            return null;
+        }
+
+        Map<Object, DataFrame> groupedDataFrames = groupBy(groupByColumn);
+        if (groupedDataFrames == null) {
+            return null;
+        }
+
+        Map<Object, Double> aggregatedResults = new HashMap<>();
+        for (Object key : groupedDataFrames.keySet()) {
+            DataFrame group = groupedDataFrames.get(key);
+            double result = switch (operation) {
+                case "mean" -> group.calculateMean(columnName);
+                case "sum" -> group.calculateSum(columnName);
+                case "min" -> group.calculateMinimum(columnName);
+                case "max" -> group.calculateMaximum(columnName);
+                default -> Double.NaN;
+            };
+            aggregatedResults.put(key, result);
+        }
+
+        return aggregatedResults;
+    }
         
 
         

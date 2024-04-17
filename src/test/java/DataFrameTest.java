@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -193,6 +194,80 @@ public class DataFrameTest {
         assertEquals(3, filteredDataFrame.getData().size());
     }
 
+
+        @Test
+    public void testGroupBy() throws IOException { // Teste le regroupement des données
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, DataFrame> groupedData = df.groupBy("Age");
+        assertNotNull(groupedData);
+        assertEquals(4, groupedData.size()); // Attendu: 4 groupes distincts d'âges
+    }
+
+    @Test
+    public void testAggregateMean() throws IOException { // Teste l'agrégation avec la moyenne
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("mean", "Note", "Age");
+        assertNotNull(aggregatedResults);
+        assertEquals(4, aggregatedResults.size()); // Attendu: 4 moyennes différentes correspondant à 3 groupes d'âges différents
+    }
+
+    @Test
+    public void testAggregateSum() throws IOException { // Teste l'agrégation avec la somme
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("sum", "Note", "Age");
+        assertNotNull(aggregatedResults);
+        assertEquals(4, aggregatedResults.size()); // Attendu: 4 sommes différentes correspondant à 3 groupes d'âges différents
+    }
+
+    @Test
+    public void testAggregateMin() throws IOException { // Teste l'agrégation avec le minimum
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("min", "Note", "Age");
+        assertNotNull(aggregatedResults);
+        assertEquals(4, aggregatedResults.size()); // Attendu: 4 minimums différents correspondant à 3 groupes d'âges différents
+    }
+
+    @Test
+    public void testAggregateMax() throws IOException { // Teste l'agrégation avec le maximum
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("max", "Note", "Age");
+        assertNotNull(aggregatedResults);
+        assertEquals(4, aggregatedResults.size()); // Attendu: 4 maximums différents correspondant à 3 groupes d'âges différents
+    }
+
+    @Test
+    public void testAggregateOpInconnu() throws IOException { // Teste l'agrégation pour une colonne inexistante
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("test", "Note", "Age");
+        assertNull(aggregatedResults);
+    }
+
+    @Test
+    public void testAggregateColonneInexistante() throws IOException { // Teste l'agrégation pour une colonne inexistante
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        Map<Object, Double> aggregatedResults = df.aggregate("mean", "Note", "NonexistentColumn");
+        assertNull(aggregatedResults);
+    }
+
+    @Test
+    public void testAggregateOrdermean() throws IOException { // Teste l'ordre des groupes dans l'agrégation
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        
+        Map<Object, Double> meanResults = df.aggregate("mean", "Note", "Age");
+        assertNotNull(meanResults);
+        assertEquals(4, meanResults.size());
+        Integer prevAge = null; 
+        
+        for (Object ageObj : meanResults.keySet()) {
+            if (ageObj instanceof Integer) { 
+                Integer age = (Integer) ageObj;
+                if (prevAge != null) {
+                    assertTrue(age >= prevAge); 
+                }
+                prevAge = age;
+            }
+        }
+    }
 }
 
 
