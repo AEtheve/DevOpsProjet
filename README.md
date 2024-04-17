@@ -11,9 +11,6 @@ Adrien Chapurlat, https://github.com/LaChappp
 ## site web associé 
 https://aetheve.github.io/DevOpsProjet/
 
-## Documentation
-[Documentation](https://aetheve.github.io/DevOpsProjet/apidocs/DataFrame.html)
-
 ## Description
 Ce projet vise à développer une bibliothèque Java pour la manipulation et l'analyse de données. Inspirée par des outils tels que Pandas en Python, cette bibliothèque permettra de créer et de manipuler des structures de données complexes et d'effectuer des analyses statistiques.
 
@@ -25,7 +22,7 @@ Ce projet vise à développer une bibliothèque Java pour la manipulation et l'a
 - Mécanisme de groupement de données et opération sur ces dernières.
 
 ## Usage
-build : `mvn -B package --file pom.xml` \
+build : `mvn -B package --file pom.xml`<br>
 test : `mvn test`
 
 ## Outils et Technologies
@@ -37,8 +34,8 @@ test : `mvn test`
 ## Workflow Git
 Nous utilisons le workflow Feature Branch. Chaque nouvelle fonctionnalité (ou bugfix) est développée dans une branche séparée. Les Pull Requests sont ensuite soumis pour examen et validation avant d'être fusionnés dans la branche principale (main).
 
-## Intégration Continue
-Un pipeline CI/CD est mis en place avec GitHub Actions pour automatiser les tests et la couverture de code à chaque push et Pull/Merge Request.
 
+## Intégration Continue
+Un pipeline CI/CD est mis en place avec GitHub Actions pour automatiser les tests et la couverture de code à chaque push et Pull/Merge Request. En complément, pour améliorer le processus de livraison continue, nous avons intégré l'utilisation de Docker. Pour héberger cette image, nous avons choisi d'utiliser le dépôt Docker intégré à GitHub, GitHub Packages.
 ## Procédure de Validation des Pull Requests
 Chaque Pull Request doit être revu par au moins un autre membre de l'équipe avant d'être fusionné dans la branche principale. Nous utilisons des workflows GitHub Actions pour exécuter des tests automatiques et vérifier la couverture de code à chaque Pull Request.
