@@ -22,8 +22,8 @@ Ce projet vise à développer une bibliothèque Java pour la manipulation et l'a
 - Mécanisme de groupement de données et opération sur ces dernières.
 
 ## Usage
-build : mvn -B package --file pom.xml
-test : mvn test
+build : `mvn -B package --file pom.xml`<br>
+test : `mvn test`
 
 ## Outils et Technologies
 - **Git** pour le contrôle de version.
