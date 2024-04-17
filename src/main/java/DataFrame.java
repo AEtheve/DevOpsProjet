@@ -344,13 +344,31 @@ import java.util.stream.Collectors;
         Map<Object, Double> aggregatedResults = new HashMap<>();
         for (Object key : groupedDataFrames.keySet()) {
             DataFrame group = groupedDataFrames.get(key);
-            double result = switch (operation) {
-                case "mean" -> group.calculateMean(columnName);
-                case "sum" -> group.calculateSum(columnName);
-                case "min" -> group.calculateMinimum(columnName);
-                case "max" -> group.calculateMaximum(columnName);
-                default -> Double.NaN;
-            };
+            // double result = switch (operation) {
+            //     case "mean" -> group.calculateMean(columnName);
+            //     case "sum" -> group.calculateSum(columnName);
+            //     case "min" -> group.calculateMinimum(columnName);
+            //     case "max" -> group.calculateMaximum(columnName);
+            //     default -> Double.NaN;
+            // };
+
+            double result = 0;
+            switch (operation) {
+                case "mean":
+                    result = group.calculateMean(columnName);
+                    break;
+                case "sum":
+                    result = group.calculateSum(columnName);
+                    break;
+                case "min":
+                    result = group.calculateMinimum(columnName);
+                    break;
+                case "max":
+                    result = group.calculateMaximum(columnName);
+                    break;
+                default:
+                    result = Double.NaN;
+            }
             aggregatedResults.put(key, result);
         }
 
