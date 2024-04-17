@@ -62,15 +62,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.6</version>
-                    <configuration>
-                        <locales>fr</locales>
-                    </configuration>
-                </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
@@ -112,13 +103,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-publish-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.8.2</version>
                     <configuration>
-                        <scmBranch>gh-pages</scmBranch>
+                        <scmBranch>main</scmBranch>
                     </configuration>
                 </plugin>
         </plugins>
-
     </build>
     <!-- =============================================================== -->
     <!-- Gestion des rapports -->
