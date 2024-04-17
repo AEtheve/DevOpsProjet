@@ -6,7 +6,7 @@
 ## Auteurs
 Alexis Éthève, https://github.com/AEtheve \
 Louis Lemay, https://github.com/ar0x18 \
-Adrien Chapurlat, https://github.com/LaChappp \ 
+Adrien Chapurlat, https://github.com/LaChappp 
 
 ## Description
 Ce projet vise à développer une bibliothèque Java pour la manipulation et l'analyse de données. Inspirée par des outils tels que Pandas en Python, cette bibliothèque permettra de créer et de manipuler des structures de données complexes et d'effectuer des analyses statistiques.
