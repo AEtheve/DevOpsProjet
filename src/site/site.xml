@@ -1,0 +1,26 @@
+<project name="DevOps Projet">
+    <bannerLeft>
+        <name>DevOps Projet</name>
+        <href>https://github.com/AEtheve/DevOpsProjet</href>
+    </bannerLeft>
+    <!-- Utilisation du template de site fluido -->
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.6</version>
+    </skin>
+
+    <!-- Affichage de la date et de la version à droite dans le bandeau du haut -->
+    <publishDate position="right"/>
+    <version position="right"/>
+
+    <body>
+        <!-- ===== Menus ===== -->
+        <!-- Ajout d'un menu vers le projet parent -->
+        <menu ref="parent" inherit="top"/>
+        <!-- Ajout d'un menu vers les différents modules du projet -->
+        <menu ref="modules" inherit="top"/>
+        <menu ref="reports" inherit="top"/>
+    </body>
+    
+</project>
