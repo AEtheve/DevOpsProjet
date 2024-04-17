@@ -11,6 +11,9 @@ Adrien Chapurlat, https://github.com/LaChappp
 ## site web associé 
 https://aetheve.github.io/DevOpsProjet/
 
+## Documentation
+[Documentation](https://aetheve.github.io/DevOpsProjet/apidocs/DataFrame.html)
+
 ## Description
 Ce projet vise à développer une bibliothèque Java pour la manipulation et l'analyse de données. Inspirée par des outils tels que Pandas en Python, cette bibliothèque permettra de créer et de manipuler des structures de données complexes et d'effectuer des analyses statistiques.
 
