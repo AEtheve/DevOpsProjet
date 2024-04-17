@@ -21,20 +21,6 @@
         public List<Object[]> getData() {
             return data;
         }
-        
-        /**
-         * Récupère une ligne spécifique du DataFrame.
-         *
-         * @param rowIndex L'indice de la ligne à récupérer (commence à 0).
-         * @return Un tableau d'objets contenant les valeurs de la ligne.
-         * @throws IndexOutOfBoundsException Si l'indice de ligne est invalide.
-         */
-        public Object[] getRow(int rowIndex) {
-            if (rowIndex < 0 || rowIndex >= data.size()) {
-                throw new IndexOutOfBoundsException("Indice de ligne invalide : " + rowIndex);
-            }
-            return data.get(rowIndex);
-        }
 
         /**
          * Constructeur prenant des données et des colonnes en tant que paramètres.
@@ -278,9 +264,6 @@
                         // Gère les valeurs qui ne peuvent pas être converties en Double
                         System.out.println("La valeur '" + value + "' dans la colonne '" + columnName + "' n'est pas un nombre valide.");
                     }
-                } else if (value instanceof Double && (Double) value > seuil) {
-                    // Si la valeur est déjà de type Double, vérifie simplement si elle est supérieure au seuil
-                    filteredData.add(row);
                 }
             }
             // Convertit la liste en tableau pour créer un nouveau DataFrame

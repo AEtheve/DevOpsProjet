@@ -140,6 +140,59 @@ public class DataFrameTest {
         }
     }
 
+    @Test
+    public void testFilterNonNumericValues() throws IOException { // Teste le filtrage pour des valeurs non numériques
+        DataFrame df = new DataFrame("src/main/ressources/non_numeric.csv");
+        DataFrame filteredDataFrame = df.filter("Note", 25); 
+        assertNotNull(filteredDataFrame);
+        assertEquals(4, filteredDataFrame.getData().size());
+    }
+
+    @Test
+    public void testFilterNull() throws IOException { // Teste le filtrage pour des valeurs nulles
+        DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+        DataFrame filteredDataFrame = df.filter("Age", 25); 
+        assertEquals(0, filteredDataFrame.getData().size());
+    }
+
+    @Test
+    public void testSelectRowsNull() { // Teste la sélection de lignes
+        try {
+            DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+            DataFrame selectedRows = df.selectRows(new int[]{0, 4}); // Sélectionne les lignes 0 et 4
+            assertNotNull(selectedRows);
+            assertEquals(1, selectedRows.getData().size());
+        } catch (IOException e) {
+            fail("IOException occurred: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testSelectRowsNull2() {  // Teste la sélection de lignes
+        try {
+            DataFrame df = new DataFrame("src/main/ressources/example1.csv");
+            DataFrame selectedRows = df.selectRows(new int[]{4}); 
+            assertNotNull(selectedRows);
+            assertEquals(0, selectedRows.getData().size());
+        } catch (IOException e) {
+            fail("IOException occurred: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testFilterNull2() throws IOException { // Teste le filtrage pour des valeurs nulles
+        DataFrame df = new DataFrame("src/main/ressources/empty.csv");
+        DataFrame filteredDataFrame = df.filter("Age", 25); 
+        assertEquals(0, filteredDataFrame.getData().size());
+    }
+
+    @Test
+    public void testFilterNull3() throws IOException { // Teste le filtrage pour des valeurs non acceptées
+        DataFrame df = new DataFrame("src/main/ressources/empty.csv");
+        DataFrame filteredDataFrame = df.filter("Note", 25); 
+        assertEquals(3, filteredDataFrame.getData().size());
+    }
+
 }
 
 
