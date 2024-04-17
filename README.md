@@ -3,6 +3,10 @@
 ![workflow](https://github.com/AEtheve/DevOpsProjet/actions/workflows/maven.yml/badge.svg)
 ![Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2FAEtheve%2F73adb891918b248bf5cd39afb416ee7c%2Fraw%2Ftest.json)
 
+## Auteurs
+Alexis Éthève, https://github.com/AEtheve \
+Louis Lemay, https://github.com/ar0x18 \
+Adrien Chapurlat, https://github.com/LaChappp 
 
 ## Description
 Ce projet vise à développer une bibliothèque Java pour la manipulation et l'analyse de données. Inspirée par des outils tels que Pandas en Python, cette bibliothèque permettra de créer et de manipuler des structures de données complexes et d'effectuer des analyses statistiques.
