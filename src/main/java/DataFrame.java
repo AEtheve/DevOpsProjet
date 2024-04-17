@@ -1,18 +1,23 @@
-    import java.io.BufferedReader;
-    import java.io.FileReader;
-    import java.io.IOException;
-    import java.util.ArrayList;
-    import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
     /**
+     * AUTHORS:  Lemay Louis , Adrien Chapurlat, Alexis Ethève , 2024
      * Une classe représentant un DataFrame pour la manipulation de données tabulaires.
+     * Un DataFrame est une structure de données tabulaire similaire à un tableau ou une base de données.
+     * Cette classe fournit des méthodes pour charger, afficher, sélectionner, filtrer des données.
      */
     public class DataFrame {
+        // Les données du DataFrame
         private List<Object[]> data;
+        // Les noms des colonnes
         private String[] columns;
 
         /**
